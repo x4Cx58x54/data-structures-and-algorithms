@@ -75,5 +75,23 @@ Status Initlist_Sq(Sqlist &L){
     return OK;
 }
 
+// Algorithm 2.4
+// Insert an element to an ordered sequence list, before the ith element
+Status ListInsert_Sq(SqList &L, int i, ElemType e){
+    if (i<1 || i>L.length) 
+        return ERROR;
+    if (L.length<=L.listsize){
+        newbase=(ElemType*)realloc(L.elem, (L.listsize+LISTINCREMENT)*sizeof(ElemType));
+        if (!newbase) return OVERFLOW;
+        L.elem=newbase;
+        L.listsize+=LISTINCREMENT;
+    }
+    q=&(L.elem[i-1]);
+    for(p=&(L.elem[L.length-1]);p>=q;p--)
+        *(p+1)=*p;
+    *q=e;
+    L.length++;
+    return OK;
+}
 
 
