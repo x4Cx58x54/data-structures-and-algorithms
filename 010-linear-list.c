@@ -155,13 +155,14 @@ struct LNode
     ElemType data;
     struct LNode *next;
 }
+LNode * LinkList;
 
 // Algorithm 2.8
 // Get the ith element in a single linked list
 Status GetElem_L(LinkList L, int i, ElemType &e)
 {
-    p=L->next;
-    j=1;
+    p=L;
+    j=0;
     while (p && j<i)
     {
         p=p->next;
@@ -172,3 +173,21 @@ Status GetElem_L(LinkList L, int i, ElemType &e)
     return OK;
 }
 
+// Algorithm 2.9
+// Insert an element before the ith element in a linked list
+Status ListInsert_L(LinkList &L, int i, ElemType e)
+{
+    p=L;
+    j=0;
+    while(p && j<i-1)
+    {
+        p=p->next;
+        j++;
+    }
+    if (!p || j>i-1) return ERROR;
+    s=(LinkList)malloc(sizeof(LNode));
+    s->data=e;
+    s->next=p->next;
+    p->next=s;
+    return OK;
+}
