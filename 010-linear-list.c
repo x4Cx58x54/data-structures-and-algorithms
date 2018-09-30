@@ -191,3 +191,22 @@ Status ListInsert_L(LinkList &L, int i, ElemType e)
     p->next=s;
     return OK;
 }
+
+// Algorithm 2.10
+// Delete the ith element and return to e
+Status ListDelete_L(LinkList &L, int i, ElemType &e)
+{
+    p=L;
+    j=0;
+    while(p && j<i-1)
+    {
+        p=p->next;
+        j++;
+    }
+    if (!p || j>i) return ERROR;
+    p->next=(p=>next)->next;
+    e=(p->next)->data;
+    free(p->next);
+    return OK;
+}
+
