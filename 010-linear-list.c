@@ -210,3 +210,62 @@ Status ListDelete_L(LinkList &L, int i, ElemType &e)
     return OK;
 }
 
+// Algorithm 2.11
+// Create a linked list
+void CreateList_L(LinkList &L, int n)
+{
+    L=(LinkList)malloc(sizeof(LNode));
+    L->next=NULL;
+    for (i=0;i<n;i++)
+    {
+        p=(LinkList)malloc(sizeof(LNode));
+        scanf(&p->data);
+        p->next=L->next;
+        L->next=p;
+    }
+}
+
+// Algorithm 2.12
+// Merge two ordered linked lists
+void MergeList_L(LinkList &La, LinkList &Lb, LinkList &Lc)
+{
+    pa=La->next;
+    pb=Lb->next;
+    Lc=La;
+    pc=Lc;
+    while (pa&&pb)
+        if (pa->data>pb->data)
+        {
+            pc->next=pa;
+            pc=pc->next;
+            pa=pa->next;  
+        }
+        else
+        {
+            pc->next=pb;
+            pc=pc->next;
+            pb=pb->next;
+        }
+    pc->next=pa?pa:pb;
+    free(Lb);
+    return;
+}
+
+// Static Linklist
+#define MAXSIZE 1000
+struct
+{
+    ElemType data;
+    int cur;    
+}component, SLinkList[MAXSIZE];
+
+// Algorithm 2.13
+// Find the ith element in a static linklist
+int LocateElem_SL(SLinkList S, ElemType e)
+{
+    i=S[0].cur;
+    while(i && S[i].data!=e) i=S[i].cur;
+    return i;
+}
+
+// Algorithm 2.14
