@@ -269,3 +269,61 @@ int LocateElem_SL(SLinkList S, ElemType e)
 }
 
 // Algorithm 2.14
+// Initialize a static linked list
+void InitSpace_SL(SLinkList &space)
+{
+    for(i=0;i<MAXSIZE-1;i++)
+        space[i].cur=i+1;
+    space[MAXSIZE-1].cur=0;
+}
+
+// Algorithm 2.15
+// Return the adress of the first available empty element
+int Malloc_SL(SLinkList &space)
+{
+    i=space[0].cur;
+    if (space[0].cur) space[0].cur=space[i].cur;
+    return i;
+}
+
+// Algorithm 2.16
+// Free the kth element
+void Free_SL(SLinkList &space, int k)
+{
+    space[k].cur=space[0].cur;
+    space[0].cur=k;
+}
+
+// Algorithm 2.17
+// Calculate the difference of two sets A and B
+// (A-B)∪(B-A)
+void difference(SLinkList &space, int &S)
+{
+    InitSpace_SL(space);
+    S=Malloc_SL(space);
+    r=S;
+    scanf(m,n); //Element number of A and B
+    for (j=1;j<=m;j++)
+    {
+        i=Malloc_SL(space);
+        scanf(space[i].data);
+        space[r].cur=i;
+        r=i;
+    }
+    space[r].cur=0;
+    for (j=1;j<=n;j++)
+    {
+        scanf(b);
+        p=S;
+        k=space[S].cur;
+        while (k!=space[r].cur && space[k].data!=b)
+        {
+            p=k;
+            k=space[k].cur;
+        }
+        if (k==space[r].cur)
+        {
+            
+        }
+    }
+}
