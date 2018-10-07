@@ -323,7 +323,26 @@ void difference(SLinkList &space, int &S)
         }
         if (k==space[r].cur)
         {
-            
+            i=Malloc_SL(space);
+            space[i].data=b;
+            space[i].cur=space[r].cur;
+            space[r].cur=i;
+        }
+        else
+        {
+            space[p].cur=space[k].cur;
+            Free_SL(space,k);
+            if(r==k) r=p;
         }
     }
 }
+
+// Double Linked List
+struct DuLNode
+{
+    ElemType data;
+    struct DuLNode* prior;
+    struct DuLNode* next;
+}DuLNode, *DuLinkList;
+
+
