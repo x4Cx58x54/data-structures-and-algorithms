@@ -71,7 +71,7 @@ struct{
     ElemType* elem;
     int length;
     int listsize;
-}
+} SQlist;
 
 // Algorithm 2.3
 // Initialize a sequence list
@@ -154,8 +154,7 @@ struct LNode
 {
     ElemType data;
     struct LNode *next;
-}
-LNode * LinkList;
+} LNode, *LinkList;
 
 // Algorithm 2.8
 // Get the ith element in a single linked list
@@ -278,7 +277,7 @@ void InitSpace_SL(SLinkList &space)
 }
 
 // Algorithm 2.15
-// Return the adress of the first available empty element
+// Return the adress of the first element of the empty list
 int Malloc_SL(SLinkList &space)
 {
     i=space[0].cur;
@@ -344,5 +343,4 @@ struct DuLNode
     struct DuLNode* prior;
     struct DuLNode* next;
 }DuLNode, *DuLinkList;
-
 
