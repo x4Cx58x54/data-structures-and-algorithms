@@ -67,7 +67,8 @@ void MergeList(List La, List Lb, List &Lc)
 // SqList
 # define LIST_INIT_SIZE 100
 # define LISTINCREMENT 10
-struct{
+struct SQList 
+{
     ElemType* elem;
     int length;
     int listsize;
@@ -252,7 +253,7 @@ void MergeList_L(LinkList &La, LinkList &Lb, LinkList &Lc)
 
 // Static Linklist
 #define MAXSIZE 1000
-struct
+struct SLinkList
 {
     ElemType data;
     int cur;    
@@ -344,3 +345,9 @@ struct DuLNode
     struct DuLNode* next;
 }DuLNode, *DuLinkList;
 
+// Algorithm 2.18
+// Insert e before the ith element
+Status ListInsert_DuL(DuLinkList &L, int i, ElemType e)
+{
+    
+}
