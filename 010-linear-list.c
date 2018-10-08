@@ -386,3 +386,52 @@ typedef struct LinkList
     Link head, tail;
     int len;
 }LinkList;
+
+Status MakeNode(Link &p, ElemType e);
+void FreeNode(Link &p);
+Status InitList(LinkList &L);
+Status DestroyList(LinkList &L);
+Status ClearList(LinkList &L);
+Status InsFirst(Link h, Link s);
+Status DelFirst(Link h, Link &q);
+Status Append(LinkList &L, Link s);
+Status Remove(LinkList &L, Link &q);
+Status InsBefore(LinkList &L, Link &p, Link s);
+Status InsAfter(LinkList &L, Link &p, Link s);
+Status SetCurElem(Link &p, ElemType e);
+ElemType GetCurElem(Link p);
+Status ListEmpty(LinkList L);
+int ListLength(LinkList L);
+Position GetHead(LinkList L);
+Position GetLast(LinkList L);
+Position PriorPos(LinkList L);
+Position NextPos(LinkList L);
+Status LocatePos(LinkList L, int i, Link &p);
+Position LocateElem(LinkList L, ElemType e, Status(*compare)(ElemType, ElemType));
+Status ListTraverse(LinkList L, Status(*visit)());
+
+// Algorithm 2.20
+// -> 2.9
+Status ListInsert_L(LinkList &L, int i, ElemType e)
+{
+    if(!LocatePos(L,i-1,h)) return ERROR;
+    if(!MakeNode(s,e)) return ERROR;
+    InsFirst(h,s);
+    return OK;
+}
+
+// Algorithm 2.21
+// -> 2.12
+Status MergeList_L(LinkList &La, LinkList &Lb, LinkList &Lc, int (*compare)(ElemType, ElemType))
+{
+    if (!InitList(Lc)) return ERROR;
+    ha=GetHead(La);
+    hb=GetHead(Lb);
+    pa=NextPos(La, ha);
+    pb=NextPos(Lb, hb);
+    while (pa&&pb)
+    {
+        a=GetCurElem(pa);
+        b=GetCurElem(pb);
+    }
+}
