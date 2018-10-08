@@ -349,5 +349,40 @@ struct DuLNode
 // Insert e before the ith element
 Status ListInsert_DuL(DuLinkList &L, int i, ElemType e)
 {
-    
+    if (!(p=GetElemP_DuL(L,i)))
+        return ERROR;
+    if (!(s=(DuLinkList)malloc(sizeof(DuLNode)))) 
+        return ERROR;
+    s->data=e;
+    s->prior=p->prior;
+    s->next=p;
+    p->prior=s;
+    (p->prior)->next=s;
+    return OK;
 }
+
+// Algorithm 2.19
+// Delete the ith element from a double linked list
+Status ListDelete_DuL(DuLinkList &L, int i, ElemType &e)
+{
+    if (!p=GetElemP_DuL(L,i))
+        return ERROR;
+    e=p->data;
+    p->next->prior=p->prior;
+    p->prior->next=p->next;
+    free(p);
+    return OK;
+}
+
+// Linked List
+typedef struct LNode
+{
+    ElemType data;
+    struct LNode *next;
+}*Link, *Position;
+
+typedef struct LinkList
+{
+    Link head, tail;
+    int len;
+}LinkList;
