@@ -7,4 +7,3 @@
 
 typedef int Status;
 typedef int ElemType;
-typedef int Position;
