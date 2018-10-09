@@ -433,5 +433,114 @@ Status MergeList_L(LinkList &La, LinkList &Lb, LinkList &Lc, int (*compare)(Elem
     {
         a=GetCurElem(pa);
         b=GetCurElem(pb);
+        if ((*compare)(a,b))
+        {
+            DelFirst(ha,q);
+            Append(Lc,q);
+            pa=NextPos(La,ha);
+        }
+        else
+        {
+            DelFirst(hb,q);
+            Append(Lc,q);
+            pa=NextPos(Lb,hb);
+        }
     }
+    if(pa)
+        Append(Lc,pa);
+    else
+        Append(Lc,pb);
+    FreeNode(ha);
+    FreeNode(hb);
+    return OK;
+}
+
+// Polynomial
+ADT Polynomial
+{
+    CreatPolyn(&P,m);
+    DestroyPolyn(&P);
+    PrintPolyn(P);
+    PolynLength(P);
+    AddPolyn(&Pa,&Pb);
+    SubtractPolyn(&Pa,&Pb);
+    MultiplyPolyn(&Pa,&Pb);
+}
+
+struct Polynomial
+{
+    float coef;
+    int expn;
+}term, ElemType;
+
+typedef LinkList polynomial;
+
+void CreatPolyn(polynomial &P, int m);
+void DestroyPolyn(polynomial &P);
+void PrintPolyn(polynomial P);
+int PolynLength(polynomial P);
+void AddPolyn(polynomial &Pa, polynomial &Pb);
+void SubtractPolyn(polynomial &Pa, polynomial &Pb);
+void MultiplyPolyn(polynomial &Pa, polynomial &Pb);
+int cmp(term a, term b);
+
+// Algorithm 2.22
+void CreatPolyn(polynomial &P, int m)
+{
+    InitList(P);
+    h=GetHead(P);
+    e.coef=0.0;
+    e.expn=-1;
+    for(i=0;i<m;i++)
+    {
+        scanf(e.coef, e.expn);
+        if(!LocateElem(P,e,q,(*cmp)()))
+            if(MakeNode(s,e)) InsFirst(q,s);
+    }
+}
+
+// Algorithm 2.23
+void AddPolyn(polynomial &Pa, polynomial &Pb)
+{
+    ha=GetHead(Pa);
+    hb=GetHead(Pb);
+    qa=NextPos(Pa,ha);
+    qb=NextPos(Pb,hb);
+    while (qa && qb)
+    {
+        a=GetCurElem(qa);
+        b=GetCurElem(qb);
+        switch(*cmp(a,b))
+        {
+            case -1:
+                ha=qa;
+                qa=NextPos(Pa,qa);
+                break;
+            case 0:
+                sum=a.coef+b.coef;
+                if(sum!=0.0)
+                {
+                    SetCurElem(qa,sum);
+                    ha=qa;
+                }
+                else
+                {
+                    DelFirst(ha,qa);
+                    FreeNode(qa);
+                }
+                DelFirst(hb,qb);
+                FreeNode(qb);
+                qb=NextPos(Pb,hb);
+                qa=NextPos(Pa,ha);
+                break;
+            case 1:
+                DelFirst(hb,qb);
+                InsFirst(ha,qb);
+                qb=NextPos(Pb,hb);
+                ha=NextPos(Pa,ha);
+                break;
+        }
+    }
+    if (!ListEmpty(Pb)) Append(Pa,qb);
+    FreeNode(hb);
 }
