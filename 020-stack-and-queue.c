@@ -166,9 +166,17 @@ Status MazePath(MazeType maze, PosType start, PosType end)
 
 // Algorithm 3.4
 OperandType EvaluateExpression()
+
+
+// Algorithm 3.5
+void hanoi(int n, char x, char y, char z)
 {
-    InitStack (OPTR);
-    Push(OPTR, '#');
-    InitStack (OPND);
-    c=getchar();
+    if (n==1)
+        move(x,1,z);
+    else
+    {
+        hanoi(n-1,x,z,y);
+        move(x,n,z);
+        hanoi(n-1,y,x,z);
+    }
 }
