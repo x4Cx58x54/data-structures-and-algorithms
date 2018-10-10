@@ -75,3 +75,100 @@ Status Pop(SqStack &S, SElemType &e)
     e=*--S.top;
     return OK;
 }
+
+// Algorithm 3.1
+// Positional system conversion
+void conversion()
+{
+    InitStack(S);
+    scanf("%d", N);
+    while (N)
+    {
+        Push(S, N%8);
+        N/=8;
+    }
+    while (!StackEmpty(S))
+    {
+        Pop(S,e);
+        printf("%d",e);
+    }
+}
+
+// Algorithm 3.2
+void LineEdit()
+{
+    InitStack(S);
+    ch=getchar();
+    while (ch!=EOF)
+    {
+        while (ch!=EOF && ch!='\n')
+        {
+            switch(ch)
+            {
+                case '#': Pop (S,c); break;
+                case '@': ClearStack(S); break;
+                default: Push(S,ch); break; 
+            }
+            ch=getchar();
+        }
+        ClearStack(S);
+        if (ch!=EOF) ch=getchar();
+    }
+    DestroyStack(S);
+}
+
+// Algorithm 3.3
+// Maze
+struct
+{
+    int ord;
+    PosType seat;
+    int di;
+}SElemType;
+
+Status MazePath(MazeType maze, PosType start, PosType end)
+{
+    InitStack(S);
+    curpos=start;
+    curstep=1;
+    do
+    {
+        if (Pass(curpos))  // Neither blocked or footprinted
+        {
+            FootPrint(curpos);
+            e=(curstep, curpos, 1);
+            Push(S,e);
+            if (curpos==end) return TRUE;
+            curpos=NextPos(curpos,1);
+            curstep++;
+        }
+        else
+        {
+            if (!StackEmpty(S))
+            {
+                Pop(S,e);
+                while (e.di==4 && !StackEmpty(S))
+                {
+                    MarkPrint(e.seat); // Mark as unavailable
+                    Pop(S,e);
+                }
+                if (di<4)
+                {
+                    e.di++;
+                    Push(S,e);
+                    curpos=NextPos(e.seat, e.di);
+                }
+            }
+        }
+    }while(!StackEmpty(S));
+    return FALSE;
+}
+
+// Algorithm 3.4
+OperandType EvaluateExpression()
+{
+    InitStack (OPTR);
+    Push(OPTR, '#');
+    InitStack (OPND);
+    c=getchar();
+}
