@@ -166,7 +166,39 @@ Status MazePath(MazeType maze, PosType start, PosType end)
 
 // Algorithm 3.4
 OperandType EvaluateExpression()
-
+{
+    InitStack(OPTR);
+    Push(OPTR,'#');
+    InitStack(OPND);
+    c=getchar();
+    while (c!='#' || GetTop(OPTR,'#')!='#')
+    {
+        if (IsOperand)
+        {
+            Push(OPND,c);
+            c=getchar();
+        }
+        else
+            switch(Precede(GetTop(OPND), c))
+            {
+                case '<':
+                    Push(OPTR,c);
+                    c=getchar();
+                    break;
+                case '=':
+                    Pop(OPTR,x);
+                    c=getchar();
+                    break;
+                case '>':
+                    Pop(OPTR, theta);
+                    Pop(OPND, b);
+                    Pop(OPND, a);
+                    Push(OPND, Operate(a, theta, b));
+                    break;
+            }
+    }
+    return GetTop(OPND);
+}
 
 // Algorithm 3.5
 void hanoi(int n, char x, char y, char z)
@@ -180,3 +212,4 @@ void hanoi(int n, char x, char y, char z)
         hanoi(n-1,y,x,z);
     }
 }
+
