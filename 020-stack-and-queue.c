@@ -279,3 +279,142 @@ Status DeQueue(LinkQueue &Q, QElemType &e)
     free(p);
     return OK;
 }
+
+// Circular Queue
+
+#define MAXQSIZE 100
+struct
+{
+    QElemType *base;
+    int front;
+    int rear;
+}SqQueue;
+
+Status InitQueue(SqQueue &Q)
+{
+    Q.base=(QElemType*)malloc(MAXQSIZE*sizeof(QElemType));
+    if (!Q.base) return OVERFLOW;
+    Q.front=Q.rear=0;
+    return OK;
+}
+
+int QueueLength(SqQueue Q)
+{
+    return (Q.rear-Q.front+MAXQSIZE)%MAXQSIZE;
+}
+
+Status EnQueue(SqQueue &Q, QElemType e)
+{
+    if ((Q.rear+1)%MAXQSIZE==Q.front) return ERROR;
+    Q.base[Q.rear]=e;
+    Q.rear=(Q.rear+1)%MAXQSIZE;
+    return OK;
+}
+
+Status DeQueue(SqQueue &Q, QElemType)
+{
+    if (Q.front==Q.rear) return ERROR;
+    e=Q.base[Q.front];
+    Q.front=(Q.front+1)%MAXQSIZE;
+    return OK;
+}
+
+// Discrete Events Simulation
+
+// Algorithm 3.6
+// Bank Simulation
+void Bank_Simulation(int CloseTime)
+{
+    OpenForDay();
+    while (MoreEvent)
+    {
+        EventDrived(OccurTime, EventType);
+        switch(EventType)
+        {
+            case 'A': CustomerArrival(); break;
+            case 'D': CustomerDeparture(); break;
+            default: Invalid();
+        }
+    }
+    CloseForDay();
+}
+
+struct 
+{
+    int OccurTime;
+    int NType;
+}Event, ElemType;
+
+typedef LinkList EventList
+
+struct
+{
+    int ArrivalTime;
+    int Duration;
+}QElemType;
+
+// Algorithm 3.7
+
+EventList ev;
+Event en;
+LinkQueue q[5];
+QElemType customer;
+int TotalTime, CustomerNum;
+
+int cmp(Event a, Event b); 
+// return -1 if a before b, 0 if a, b happen simultaneously, 1 if a after b
+
+void OpenForDay()
+{
+    TotalTime=0;
+    CustomerNum=0;
+    InitList(ev);
+    en.OccurTime=0;
+    en.NType=0;
+    OrderInsert(ev, en, cmp);
+    for(i=1;i<=4;i++)
+        InitQueue(q[i]);
+    return;
+}
+
+void CustomerArrival()
+{
+    CustomerNum++;
+    Random(durtime, intertime);
+    t=en.OccurTime+intertime;
+    if (t<CloseTime)
+        OrderInsert(ev,(e,0),cmp);
+    i=Minimun(q);
+    EnQueue(q[i], (en.OccurTime,durtime));
+    if (QueueLength(q[i])==1)
+        OrderInsert(ev, (en.OccurTime+durtime, i), cmp);
+    return;
+}
+
+void CustomerDeparture()
+{
+    i=en.NType;
+    DeQueue(q[i], customer);
+    TotalTime+=en.OccurTime-customer.ArrivalTime;
+    if (!QueueEmpty(q[i]))
+    {
+        GetHead(q[i], customer);
+        OrderInsert(ev, (en, OccurTime+customer.Duration, i),(*cmp)());
+    }
+    return;
+}
+
+void Bank_Simulation(int CloseTime)
+{
+    OpenForDay();
+    while (!ListEmpty(ev))
+    {
+        DelFirst(GetHead(ev),p);
+        en=GetCurElem(p);
+        if (en.NType==0)
+            CustomerArrival();
+        else
+            CustomerDeparture();
+    }
+    printf("The average time is %f\n", (float)TotalTime/CustomerNum);
+}
