@@ -37,3 +37,32 @@ int Index(String S, String T, int pos)
     }
     return 0;
 }
+
+#define MAXSTRLEN 255
+typedef unsigned char SString[MAXSTRLEN+1];
+
+// Algorithm 4.2
+Status Concat(SString &T, SString S1, SString S2)
+{
+    if (S1[0]+S2[0]<=MAXSTRLEN)
+    {
+        T[1..S1[0]]=S1[1..S1[0]];
+        T[S1[0]+1..S1[0]+S2[0]]=S2[1..S2[0]];
+        T[0]=S1[0]+S2[0];
+        uncut=TRUE;
+    }
+    else if (S1[0]<MAXSTRLEN)
+    {
+        T[1..S1[0]]=S1[1..S1[0]];
+        T[S1[0]+1..MAXSTRLEN]=S2[1..MAXSTRLEN-S1[0]];
+        T[0]=MAXSTRLEN;
+        uncut=FALSE;
+    }
+    else
+    {
+        T[0..MAXSTRLEN]=S1[0..MAXSTRLEN];
+        uncut=FALSE;
+    }
+    return uncut;
+} 
+
