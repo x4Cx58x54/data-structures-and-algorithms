@@ -140,3 +140,33 @@ Status ClearString(HString &S)
     S.length=0;
     return OK;
 }
+
+Status Concat(HString &T, HString S1, HString S2)
+{
+    if (T.ch) free (T.ch);
+    if (!(T.ch=(char*)malloc((S1.length+S2.length)*sizeof(char))))
+        return OVERFLOW;
+    T.ch[0..S1.length-1]=S1.ch[0..S1.length-1];
+    T.length=S1.length+S2.length;
+    T.ch[S1.length..T.length-1]=S2.ch[0..S2.length-1];
+    return OK;
+}
+
+Status SubString(HString &Sub, HString S, int pos, int len)
+{
+    if (pos<1 || pos>S.length || len<0 || len>S.length-pos+1)
+        return ERROR;
+    if (Sub.ch) free(Sub.ch);
+    if (!len)
+    {
+        Sub.ch=NULL;
+        Sub.length=0;
+    }
+    else
+    {
+        Sub.ch=(char*)malloc(len*sizeof(char));
+        Sub.ch[0..len-1]=S.ch[pos-1..pos+len-2];
+        Sub.length=len;
+    }
+    return OK;
+}
