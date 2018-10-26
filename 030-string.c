@@ -219,3 +219,21 @@ int get_next(SString T, int next[])
             j=next[j];
 }
 
+// Algorithm 4.8
+int get_nextval(SString T, int nextval[])
+{
+    i=1;
+    j=0;
+    next[0]=1;
+    while (i<T[0])
+    {
+        if (j==0 || T[i]==T[j])
+        {
+            i++;
+            j++;
+            nextval[i]=(T[i]==T[j] ? nextval[j] : j)
+        }
+        else
+            j=nextval[j];
+    }
+}
