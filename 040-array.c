@@ -68,3 +68,29 @@ Status FastTransposeSMatrix(TSMatrix M, TSMatrix &T)
     return OK;
 }
 
+// Algorithm 5.3
+struct
+{
+    Triple data[MAXSIZE+1];
+    int rpos[MAXRC+1]; //the position (data[pos]) of the first nonzero element in a row
+    int nu, mu, tu;
+}RLSMatrix;
+
+Status MultSMatrix(RLSMatrix M, RLSMatrix N, RLSMatrix &Q)
+{
+    if (M.nu!=N.nu) return ERROR;
+    Q.mu=M.mu;
+    Q.nu=N.nu;
+    Q.tu=0;
+    if (M.tu!=0 && N.tu!=0)
+    {
+        for(arow=1;arow<=M.mu;arow++)
+        {
+            ctemp[]=0;
+            Q.rpos[arow]=Q.tu+1;
+            if (arow<M.mu) tp=M.rpos[arow+1];
+            else tp=M.tu+1;
+            
+        }
+    }
+}
