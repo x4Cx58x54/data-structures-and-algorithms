@@ -150,7 +150,7 @@ void MergeList_Sq(SqList La, SqList Lb, SqList &Lc)
 
 // Linked List
 
-// Single Linked List
+// Singly Linked List
 struct LNode
 {
     ElemType data;
@@ -158,7 +158,7 @@ struct LNode
 } LNode, *LinkList;
 
 // Algorithm 2.8
-// Get the ith element in a single linked list
+// Get the ith element in a singly linked list
 Status GetElem_L(LinkList L, int i, ElemType &e)
 {
     p=L;
@@ -337,7 +337,7 @@ void difference(SLinkList &space, int &S)
     }
 }
 
-// Double Linked List
+// Doubly Linked List
 struct DuLNode
 {
     ElemType data;
@@ -362,7 +362,7 @@ Status ListInsert_DuL(DuLinkList &L, int i, ElemType e)
 }
 
 // Algorithm 2.19
-// Delete the ith element from a double linked list
+// Delete the ith element from a doubly linked list
 Status ListDelete_DuL(DuLinkList &L, int i, ElemType &e)
 {
     if (!p=GetElemP_DuL(L,i))
