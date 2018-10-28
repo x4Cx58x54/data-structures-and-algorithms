@@ -1,14 +1,17 @@
 // Array
 
+#include "dsdef.h"
+
 // Sparse Matrix
 
 // Triple
 #define MAXSIZE 12500
-struct
+typedef struct
 {
     int i,j;
     ELemType e;
 }Triple;
+
 struct 
 {
     Triple data[MAXSIZE+1];
@@ -117,6 +120,65 @@ Status MultSMatrix(RLSMatrix M, RLSMatrix N, RLSMatrix &Q)
                         Q.data[Q.tu]=(arow,ccol,ctemp[ccol]);
                     }
             }
+        }
+    }
+    return OK;
+}
+
+// Algorithm 5.4
+// Orthogonal Linked List
+typedef struct OLNode
+{
+    int i,j;
+    ElemType e;
+    struct OLNode *right, *down;
+}OLNode, *OLink;
+
+typedef struct
+{
+    OLink *rhead, *chead;
+    int mu,nu,tu;
+}OList;
+
+Status CreatSMatrix_OL(OList &M)
+{
+    if (M) free(M);
+    scanf(&M.mu, &M.nu, &M.tu);
+    if (!(M.rhead)=(OLink*)malloc((M.mu+1)*sizeof(OLink))) return OVERFLOW;
+    if (!(M.chead)=(OLink*)malloc((M.nu+1)*sizeof(OLink))) return OVERFLOW;
+    M.rhead[]=M.chead[]=NULL;
+
+    for(scanf(&i,&j,&e);i!=0;scanf(&i,&j,&e))
+    {
+        if (!(p=(OLNode*)malloc(sizeof(OLNode)))) return OVERFLOW;
+        p->i=i;
+        p->j=j;
+        p->e=e;
+
+        // Line insertion
+        if (M.rhead[i]==NULL || M.rhead[i]->j>j) // p is right next to rhead
+        {
+            p->right=M.rhead[i];
+            M.rhead[i]=p;
+        }
+        else
+        {
+            for(q=M.rhead[i];(q->right)&&(q->right->j<j);q=q->right);
+            p->right=q->right;
+            q->right=p;
+        }
+
+        // Column Insertion
+        if (M.chead[j]==NULL || M.chead[j]->i>i) // p is right down to chead
+        {
+            p->down=M.chead[j];
+            M.chead[j]=p;
+        }
+        elsei
+        {
+            for(q=M.chead[j];(q->down)&&(q->down->i<i);q=q->down);
+            p->down=q->down;
+            q->down=p;
         }
     }
     return OK;
