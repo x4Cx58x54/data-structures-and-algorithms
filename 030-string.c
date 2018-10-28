@@ -1,5 +1,7 @@
 // String
 
+#include "dsdef.h"
+
 ADT String
 {
     StrAssign(&T, chars);

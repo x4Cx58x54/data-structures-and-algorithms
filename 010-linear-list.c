@@ -1,5 +1,7 @@
 // Linear List
 
+#include "dsdef.h"
+
 ADT List 
 {
     InitList(&L)

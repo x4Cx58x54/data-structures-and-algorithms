@@ -1,5 +1,7 @@
 // Stack and Queue
 
+#include "dsdef.h"
+
 ADT Stack
 {
     InitStack(&S);
