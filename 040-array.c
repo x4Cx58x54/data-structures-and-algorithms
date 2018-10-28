@@ -90,7 +90,34 @@ Status MultSMatrix(RLSMatrix M, RLSMatrix N, RLSMatrix &Q)
             Q.rpos[arow]=Q.tu+1;
             if (arow<M.mu) tp=M.rpos[arow+1];
             else tp=M.tu+1;
-            
+            // tp is the upper bound for this line in M
+
+            for(p=M.rpos[arow];p<tp;p++) // for each line in M
+            {
+                brow=M.data[p].j;
+                if (brow<N.mu) t=N.rpos[brow+1];
+                else t=N.tu+1;
+                // t is the counterpart of tp
+                for(q=N.rpos[brow];q<t;q++)
+                // for each line in N
+                // Q_ij=Σ_k(M_ik*B_kj), brow is k, 
+                // the element in the k^th column of M always
+                // multiply by the element in the k^th line of N
+                {
+                    ccol=N.data[q].j;
+                    ctemp[ccol]+= M.data[p].e*N.data[q].e;
+                    // for line arow in M, the multiplication always result in line arow in Q
+                    // and column ccol=N.data[q].j
+                }
+                for(ccol=1;ccol<Q.nu;ccol++) // compress the line in Q
+                    if(ctemp[ccol])
+                    {
+                        Q.tu++;
+                        if(Q.tu>MAXSIZE) return ERROR;
+                        Q.data[Q.tu]=(arow,ccol,ctemp[ccol]);
+                    }
+            }
         }
     }
+    return OK;
 }
