@@ -174,7 +174,7 @@ Status CreatSMatrix_OL(OList &M)
             p->down=M.chead[j];
             M.chead[j]=p;
         }
-        elsei
+        else
         {
             for(q=M.chead[j];(q->down)&&(q->down->i<i);q=q->down);
             p->down=q->down;
