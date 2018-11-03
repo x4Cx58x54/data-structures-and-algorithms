@@ -126,3 +126,33 @@ BiTree CopyBiTree(BiTree T)
     newT=CreatBiTNode(T->data, lp, rp);
     return newT;
 }
+
+// Algorithm Extra
+void BreadthFirstTraverse(BiTree T, Status (*Visit)(TElemType e))
+{
+    InitQueue(Q);
+    if (!T) return;
+    EnQueue(Q, T);
+    for (;;)
+    {
+        DeQueue(Q, a);
+        Visit(a->data);
+        if (a->lchild) EnQueue(Q, a->lchild);
+        if (a->rchild) EnQueue(Q, a->rchild);
+        if (QueueEmpty(Q)) break;
+    }
+}
+
+// Algorithm Extra
+// Reconstruct a tree by the preoeder and inorder traverse sequence
+BiTree ReconstructTree(string pre, string in)
+{
+    root=pre[0];
+    if (!root) return NULL; 
+    if (!(T=(BiTree*)malloc(sizeof(BiTree)))) return OVERFLOW;
+    T->data=root;
+    pos=Index(in, root);
+    T->lchild=ReconstructTree(pre[1..pos],in[0..pos-1]);
+    T->rchild=ReconstructTree(pre[pos+1..pre.length-1],in[pos+1..in.legnth-1]);
+    return T;
+}
