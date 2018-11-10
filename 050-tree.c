@@ -156,3 +156,71 @@ BiTree ReconstructTree(string pre, string in)
     T->rchild=ReconstructTree(pre[pos+1..pre.length-1],in[pos+1..in.legnth-1]);
     return T;
 }
+
+// Threaded Binary Tree
+typedef enum PointerTag {Link, Thread};
+typedef struct BiThrNode
+{
+    TElemType data;
+    struct BiThrNode *lchild, *rchild;
+    PointerTag LTag, RTag;
+}BiThrNode, *BithrTree;
+
+// Algorithm 6.5
+Status InOrderTraverse_Thr(BiThrNode T, Status (*Visit)(TElemType e))
+{
+    p=T->lchild; //T->lchild is the root according to the threading algorithm
+    while (p!=T)
+    {
+        while (p->LTag==Link)
+            p=p->lchild; // The leftest node
+        if (!Visit(p->data)) return ERROR;
+        while (p->RTag==Thread && p->rchild!=T)
+        {
+            p=p->rchild;
+            Visit(p->data);
+        }
+        p=p->rchild;
+    }
+    return OK;
+}
+
+// Algorithm 6.6
+Status InOrderThreading(BiThrTree &Thrt, BiThrTree T)
+{
+    if (!(Thrt=(BithrTree)malloc(sizeof(BiThrNode)))) return OVERFLOW;
+    Thrt->LTag=Link;
+    Thrt->RTag=Thread;
+    Thrt->rchild=Thrt;
+    if (!T) Thrt->lchild=Thrt;
+    else
+    {
+        Thrt->lchild=T;
+        pre=Thrt;
+        InThreading(T);
+        pre->RTag=Thread;
+        pre->rchild=Thrt;
+        Thrt->rchild=pre;
+    }
+    return OK;
+}
+
+// Algorithm 6.7
+Status InThreading(BiThrTree p)
+{
+    InThreading(p->lchild);
+    if (!p->lchild)
+    {
+        p->LTag=Thread;
+        p->lchild=pre;
+    }
+    if (!pre->rchild)
+    {
+        pre->RTag=Thread;
+        pre->rchild=p;
+    }
+    pre=p;
+    InThreading(p->rchild);
+}
+
+// Huffman Tree
