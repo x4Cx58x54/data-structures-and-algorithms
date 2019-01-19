@@ -1,11 +1,18 @@
 #include <iostream>
 using namespace std;
 
+struct slist
+{
+    int data;
+    int next;
+};
 
 
 // Insert Sort
 void InsertSort(int[], int, int);
 void BinaryInsertSort(int[], int, int);
+void TwoWaysInsertSort(slist[], int);
+void TableInsertSort(slist[], int);
 
 // Bubble Sort
 void BubbleSort(int[], int, int);
@@ -23,18 +30,23 @@ void HeapSort(int[], int);
 void Merge(int[], int, int, int);
 void MergeSort(int[], int, int);
 
+//Radix Sort
+
 
 int main()
 {
     int a[]={0,8,3,4,2,1,6,0,7,9,5};
     int maxbound=sizeof(a)/sizeof(int)-1;
 
+    slist s[11];
+    for(int i=0; i<=11; i++) s[i].data=a[i];
+
     //InsertSort(a, 1, maxbound);
     //BinaryInsertSort(a, 1, maxbound);
     //BubbleSort(a, 1, maxbound);
     //QuickSort(a, 1, maxbound);
     //SelectionSort(a, 1, maxbound);
-    HeapSort(a, maxbound);
+    //HeapSort(a, maxbound);
     //MergeSort(a, 1, maxbound);
 
     for(int i=1;i<=maxbound;i++)
