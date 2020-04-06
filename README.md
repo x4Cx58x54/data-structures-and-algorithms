@@ -1,1 +1,1 @@
-# data-structure
+# data-structures-and-algorithms
