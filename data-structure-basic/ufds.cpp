@@ -5,7 +5,7 @@
 class ufds
 {
 private:
-    int father[10000];
+    int *father;
 public:
     int Ancestor(int a)
     {
@@ -23,6 +23,11 @@ public:
     }
     ufds(int n)
     {
+        father = new int[n];
         for(int i = 0; i < n; i++) father[i] = i;
+    }
+    ~ufds()
+    {
+        delete father;
     }
 };
