@@ -3,7 +3,7 @@
 */
 
 template <typename type>
-class fenwick
+class Fenwick
 {
 private:
     type *data;
@@ -35,13 +35,13 @@ public:
     {
         return sum(r) - sum(l-1);
     }
-    fenwick(int n)
+    Fenwick(int n)
     {
         data = new type[n+1];
         size = n;
         for(int i = 0; i <= n; i++) data[i] = 0;
     }
-    ~fenwick()
+    ~Fenwick()
     {
         delete data;
     }
