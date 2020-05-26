@@ -1,5 +1,5 @@
 /*
-    Fenwick Tree
+    Fenwick tree
 */
 
 template <typename type>
